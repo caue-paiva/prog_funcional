@@ -34,6 +34,7 @@ def prox_primo(numero:int, func_percorrer: Callable[[int],int])->int:
 def maior_intervalo_geral(x:int,y:int)->int:
     primo_perto_x: int = prox_primo(x-1,  lambda x: x+1)
     primo_perto_y: int = prox_primo(y+1,  lambda x: x-1)
+    print(primo_perto_x,primo_perto_y)
 
     return primo_perto_y - primo_perto_x
 
