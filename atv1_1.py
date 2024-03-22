@@ -22,7 +22,6 @@ def eh_primo(numero:int)->bool:
 
 def __prox_primo(num_inicial:int,num_atual:int,func_percorrer: Callable[[int],int])->int:   
    if eh_primo(num_atual) and num_inicial != num_atual:
-      # print("eh primo", num_atual)
        return num_atual
    
    novo_index: int = func_percorrer(num_atual)
@@ -32,16 +31,14 @@ def __prox_primo(num_inicial:int,num_atual:int,func_percorrer: Callable[[int],in
 def prox_primo(numero:int, func_percorrer: Callable[[int],int])->int:
     return __prox_primo(numero,numero,func_percorrer)
 
-
-"""
 def maior_intervalo_geral(x:int,y:int)->int:
     primo_perto_x: int = prox_primo(x-1,  lambda x: x+1)
-    primo_perto_y: int = prox_primo(y-1,  lambda x: x-1)
-    print(primo_perto_x, primo_perto_y)
+    primo_perto_y: int = prox_primo(y+1,  lambda x: x-1)
 
     return primo_perto_y - primo_perto_x
-"""
 
+
+"""
 def testa_intervalos_consec(atual_primo:int,maior_intervalo:int ,final:int)->int:
    if atual_primo >= final:
       return maior_intervalo
@@ -58,7 +55,10 @@ def testa_intervalos_consec(atual_primo:int,maior_intervalo:int ,final:int)->int
 def maior_intervalo_consecutivo(x:int,y:int)->int:
     primeiro_primo:int = prox_primo(x-1 , lambda x: x+1) #primeiro primo a partir de x-1, então vamos incluir o x caso ele seja primo
     return testa_intervalos_consec(primeiro_primo,-1,y)
+"""
 
+x = int(input())
+y = int(input())
 
-print(maior_intervalo_consecutivo(155,478))
+print(maior_intervalo_geral(x,y))
 
