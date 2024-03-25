@@ -1,7 +1,7 @@
-from typing import Callable
-import math
+from typing import Callable #type hint para anotação de funcoes, apenas visual
+import math #raiz quadrado para achar o primo
 
-#comparacao é chamada com 2
+
 
 
 
@@ -24,12 +24,15 @@ def __prox_primo(num_inicial:int,num_atual:int,func_percorrer: Callable[[int],in
    if eh_primo(num_atual) and num_inicial != num_atual:
        return num_atual
    
-   novo_index: int = func_percorrer(num_atual)
+   novo_index: int = func_percorrer(num_atual) #percorre os numeros com uma funao, pode ser ir pro proximo numero ou anterior, depende do argumento
    return __prox_primo(num_inicial ,novo_index,func_percorrer)
 
 #retorna o prox primo a partir de um numero (sem incluir ele)
 def prox_primo(numero:int, func_percorrer: Callable[[int],int])->int:
     return __prox_primo(numero,numero,func_percorrer)
+
+
+#codigo antigo para pegar o maior intervalo nao consecutivo
 """
 def maior_intervalo_geral(x:int,y:int)->int:
     primo_perto_x: int = prox_primo(x-1,  lambda x: x+1)
@@ -41,16 +44,16 @@ def maior_intervalo_geral(x:int,y:int)->int:
 
 
 def testa_intervalos_consec(atual_primo:int,maior_intervalo:int ,final:int)->int:
-   if atual_primo >= final:
+   if atual_primo >= final: #se chegarmos no final, o resultado sera o maior intervalo ate agr, passado como parametro nas chamadas
       return maior_intervalo
    
-   prox_num_primo:int = prox_primo(atual_primo,lambda x: x+1)
-   distan:int = prox_num_primo - atual_primo
+   prox_num_primo:int = prox_primo(atual_primo,lambda x: x+1) #acha o proximo numero primo em sequencia, sem incluir o atual
+   distan:int = prox_num_primo - atual_primo #calcula a distancia do prox primo
 
    if distan > maior_intervalo:
-       return testa_intervalos_consec(prox_num_primo,distan,final) #novo maior intervalo sera a distancia
+       return testa_intervalos_consec(prox_num_primo,distan,final) #novo maior intervalo sera a distancia dessa chamada
    else:
-       return testa_intervalos_consec(prox_num_primo,maior_intervalo,final)#intervalo antigo é maior
+       return testa_intervalos_consec(prox_num_primo,maior_intervalo,final) #intervalo antigo é maior
 
 
 def maior_intervalo_consecutivo(x:int,y:int)->int:
@@ -58,8 +61,16 @@ def maior_intervalo_consecutivo(x:int,y:int)->int:
     return testa_intervalos_consec(primeiro_primo,-1,y)
 
 
-x = int(input())
-y = int(input())
+x:int = int(input()) #pega o input
+y:int = int(input())
 
-print(maior_intervalo_consecutivo(x,y))
+print(maior_intervalo_consecutivo(x,y)) #print do resultado
+
+"""
+Código feito por:
+
+Cauê Paiva Lira - NUSP: 14675416
+
+
+"""
 
