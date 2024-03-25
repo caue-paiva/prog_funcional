@@ -24,7 +24,7 @@ def __prox_primo(num_inicial:int,num_atual:int,func_percorrer: Callable[[int],in
    if eh_primo(num_atual) and num_inicial != num_atual:
        return num_atual
    
-   novo_index: int = func_percorrer(num_atual) #percorre os numeros com uma funao, pode ser ir pro proximo numero ou anterior, depende do argumento
+   novo_index: int = func_percorrer(num_atual) #percorre os numeros com uma funcao, pode ser ir pro proximo numero ou anterior, depende do argumento
    return __prox_primo(num_inicial ,novo_index,func_percorrer)
 
 #retorna o prox primo a partir de um numero (sem incluir ele)
@@ -44,12 +44,12 @@ def maior_intervalo_geral(x:int,y:int)->int:
 
 
 def testa_intervalos_consec(atual_primo:int,maior_intervalo:int ,final:int)->int:
-   if atual_primo >= final: #se chegarmos no final, o resultado sera o maior intervalo ate agr, passado como parametro nas chamadas
+   prox_num_primo:int = prox_primo(atual_primo,lambda x: x+1) #acha o proximo numero primo em sequencia, sem incluir o atual
+   
+   if prox_num_primo > final: #se o prox primo for depois do final, então o maior até agora sera a resposta final
       return maior_intervalo
    
-   prox_num_primo:int = prox_primo(atual_primo,lambda x: x+1) #acha o proximo numero primo em sequencia, sem incluir o atual
    distan:int = prox_num_primo - atual_primo #calcula a distancia do prox primo
-
    if distan > maior_intervalo:
        return testa_intervalos_consec(prox_num_primo,distan,final) #novo maior intervalo sera a distancia dessa chamada
    else:
@@ -58,7 +58,8 @@ def testa_intervalos_consec(atual_primo:int,maior_intervalo:int ,final:int)->int
 
 def maior_intervalo_consecutivo(x:int,y:int)->int:
     primeiro_primo:int = prox_primo(x-1 , lambda x: x+1) #primeiro primo a partir de x-1, então vamos incluir o x caso ele seja primo
-    return testa_intervalos_consec(primeiro_primo,-1,y)
+    #print(primeiro_primo)
+    return testa_intervalos_consec(primeiro_primo,0,y)
 
 
 x:int = int(input()) #pega o input
@@ -71,6 +72,7 @@ Código feito por:
 
 Cauê Paiva Lira - NUSP: 14675416
 
+João Pedro Alves Notari Godoy - NUSP: 14582076
 
 """
 
