@@ -5,4 +5,12 @@ main = do
    l <- getLine
    let    v :: Integer 
           v = read l
-   putStrLn  "saiu"
+
+   l2 <- getLine
+   let    v2 :: Integer 
+          v2 = read l2
+   let soma = v + v2
+
+   let str = show soma
+
+   putStrLn str
