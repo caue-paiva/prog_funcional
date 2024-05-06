@@ -4,8 +4,6 @@ arr2 = [3,5,6,8,4]
 arr3 = [5,5,5]
 
 
-
-
 def segmento_cresc_aux(arr:list, index:int, maior_sequencia:int, sequencia_atual:int)->int:
    if (len(arr) <= index):
       return maior_sequencia
