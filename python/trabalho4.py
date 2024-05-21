@@ -1,6 +1,6 @@
 
 def jogadas_aux(
-      list_jogadas:list, 
+      list_jogadas:list,
       index:int, 
       list_bonus:list,
       arremeso_ante_rodada:int,
