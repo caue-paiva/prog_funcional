@@ -84,42 +84,21 @@ def string_jogada_aux(
       str_sparr  =  "/ "
       str_fim_rodada = str_primeira_jogada
 
-
-
-   if rodada_atual < 10 :
-      if arremeso_ante_rodada == -1: #primeira jogada
+   if arremeso_ante_rodada == -1: #primeira jogada
          if pinos_derrubados == 10:
-            nova_string = string_retorno + "X _ | "
+            nova_string = string_retorno + str_strike
             novo_arremeso_ante = -1 #vamos para uma nova rodada depois do strike
             prox_rodada = rodada_atual + 1
          else:
             novo_arremeso_ante = pinos_derrubados
-            nova_string = string_retorno + f"{pinos_derrubados} "
+            nova_string = string_retorno + str_primeira_jogada
             prox_rodada = rodada_atual
-      else: #segunda jogada
+   else: #segunda jogada
          novo_arremeso_ante = -1
          if arremeso_ante_rodada + pinos_derrubados == 10: #spare
-            nova_string = string_retorno + "/ | "
+            nova_string = string_retorno + str_sparr
          else:
-            nova_string = string_retorno + f"{pinos_derrubados} | "
-         prox_rodada = rodada_atual + 1
-   else:
-      
-      if arremeso_ante_rodada == -1: #primeira jogada
-         if pinos_derrubados == 10:
-            nova_string = string_retorno + "X "
-            novo_arremeso_ante = -1 #vamos para uma nova rodada depois do strike
-            prox_rodada = rodada_atual + 1
-         else:
-            novo_arremeso_ante = pinos_derrubados
-            nova_string = string_retorno + f"{pinos_derrubados} "
-            prox_rodada = rodada_atual
-      else: #segunda jogada
-         novo_arremeso_ante = -1
-         if arremeso_ante_rodada + pinos_derrubados == 10: #spare
-            nova_string = string_retorno + "/ "
-         else:
-            nova_string = string_retorno + f"{pinos_derrubados} "
+            nova_string = string_retorno + str_fim_rodada
          prox_rodada = rodada_atual + 1
    
    return string_jogada_aux(list_jogadas,index+1,novo_arremeso_ante,nova_string,prox_rodada)
