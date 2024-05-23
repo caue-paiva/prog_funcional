@@ -73,6 +73,18 @@ def string_jogada_aux(
       return string_retorno
 
    pinos_derrubados: int = list_jogadas[index] 
+   str_primeira_jogada = f"{pinos_derrubados} "
+
+   if rodada_atual < 10:
+      str_strike = "X _ | "
+      str_sparr  =  "/ | "
+      str_fim_rodada = f"{pinos_derrubados} | "
+   else:
+      str_strike = "X "
+      str_sparr  =  "/ "
+      str_fim_rodada = str_primeira_jogada
+
+
 
    if rodada_atual < 10 :
       if arremeso_ante_rodada == -1: #primeira jogada
@@ -93,14 +105,23 @@ def string_jogada_aux(
          prox_rodada = rodada_atual + 1
    else:
       
-      if pinos_derrubados == 10:
-         nova_string = string_retorno + "X "
-      else:
-         nova_string = string_retorno + f"{pinos_derrubados}"
-      
-      novo_arremeso_ante = pinos_derrubados
-      prox_rodada = rodada_atual
-
+      if arremeso_ante_rodada == -1: #primeira jogada
+         if pinos_derrubados == 10:
+            nova_string = string_retorno + "X "
+            novo_arremeso_ante = -1 #vamos para uma nova rodada depois do strike
+            prox_rodada = rodada_atual + 1
+         else:
+            novo_arremeso_ante = pinos_derrubados
+            nova_string = string_retorno + f"{pinos_derrubados} "
+            prox_rodada = rodada_atual
+      else: #segunda jogada
+         novo_arremeso_ante = -1
+         if arremeso_ante_rodada + pinos_derrubados == 10: #spare
+            nova_string = string_retorno + "/ "
+         else:
+            nova_string = string_retorno + f"{pinos_derrubados} "
+         prox_rodada = rodada_atual + 1
+   
    return string_jogada_aux(list_jogadas,index+1,novo_arremeso_ante,nova_string,prox_rodada)
 
 def string_jogada(list_jogada:list[int])->str:
