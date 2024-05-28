@@ -1,40 +1,46 @@
 
 --função principal para calcular o bonus de cada jogada
 jogadasAux :: [Int] -> [Int] -> Int -> Int -> Int -> Int
-jogadasAux [] _ _ _ score = score
-jogadasAux (pinosDerrubados:xs) listBonus arremesoAnteRodada rodadaAtual score =
-  let novoScore = if not (null listBonus)
-                  then score + ((head listBonus + 1) * pinosDerrubados)
-                  else score + pinosDerrubados
+jogadasAux [] _ _ _ score = score --caso base
+jogadasAux (pinosDerrubados:xs) (b:bs) arremesoAnteRodada rodadaAtual score = --caso com bonus
+  let novoScore = score + ((b + 1) * pinosDerrubados) --conta com o bonus
       (novaListBonus, novaRodada, novoArremesoAnte)
         | arremesoAnteRodada == -1 =
-            if pinosDerrubados == 10 && rodadaAtual < 10
-            then let bs = if null listBonus then [] else tail listBonus
-                 in (calculaBonus bs 2, rodadaAtual + 1, -1)
-            else let bs = if null listBonus then [] else tail listBonus
-                 in (calculaBonus bs 0, rodadaAtual, pinosDerrubados)
-        | arremesoAnteRodada + pinosDerrubados == 10 && rodadaAtual < 10 =
-            let bs = if null listBonus then [] else tail listBonus
-            in (calculaBonus bs 1, rodadaAtual + 1, -1)
+            if pinosDerrubados == 10 && rodadaAtual < 10 --strike
+            then (calculaBonus bs 2, rodadaAtual + 1, -1)
+            else (calculaBonus bs 0, rodadaAtual, pinosDerrubados)
+        | arremesoAnteRodada + pinosDerrubados == 10 && rodadaAtual < 10 = --spare
+            (calculaBonus bs 1, rodadaAtual + 1, -1)
         | otherwise =
-            let bs = if null listBonus then [] else tail listBonus
-            in (calculaBonus bs 0, rodadaAtual + 1, -1)
+            (calculaBonus bs 0, rodadaAtual + 1, -1)
+  in jogadasAux xs novaListBonus novoArremesoAnte novaRodada novoScore
+jogadasAux (pinosDerrubados:xs) [] arremesoAnteRodada rodadaAtual score = -- caso sem bonus
+  let novoScore = score + pinosDerrubados --so conta os pinos derrubados
+      (novaListBonus, novaRodada, novoArremesoAnte)
+        | arremesoAnteRodada == -1 =
+            if pinosDerrubados == 10 && rodadaAtual < 10 --strike
+            then (calculaBonus [] 2, rodadaAtual + 1, -1)
+            else (calculaBonus [] 0, rodadaAtual, pinosDerrubados)
+        | arremesoAnteRodada + pinosDerrubados == 10 && rodadaAtual < 10 = --spare
+            (calculaBonus [] 1, rodadaAtual + 1, -1)
+        | otherwise =
+            (calculaBonus [] 0, rodadaAtual + 1, -1)
   in jogadasAux xs novaListBonus novoArremesoAnte novaRodada novoScore
 
 --função auxiliar para calcular os bonus de pontos da jogada
 calculaBonus :: [Int] -> Int -> [Int]
-calculaBonus [] opcao
-  | opcao == 0 = []
-  | opcao == 1 = [1]
-  | otherwise = [1, 1]
-calculaBonus (x:xs) opcao
-  | opcao == 0 = x:xs
-  | opcao == 1 = (x + 1):xs
-  | otherwise = (x + 1):1:xs
+calculaBonus [] opcao --bonus vazio
+  | opcao == 0 = [] --caso normal
+  | opcao == 1 = [1] --spare
+  | otherwise = [1, 1] --strike
+calculaBonus (x:xs) opcao --tem lista de bonus
+  | opcao == 0 = x:xs --normal
+  | opcao == 1 = (x + 1):xs --spare
+  | otherwise = (x + 1):1:xs --strike
 
 --função wrapper para calcular os pontos da jogada
 calculaPontos :: [Int] -> Int
-calculaPontos listaJogadas = jogadasAux listaJogadas [0] (-1) 1 0
+calculaPontos listaJogadas = jogadasAux listaJogadas [0] (-1) 1 0 --inicializa com os parâmetros iniciais da recursão
 
 --função principal para calcular a representaçao de string da jogada
 stringJogadaAux :: [Int] -> Int -> String -> Int -> String
@@ -63,7 +69,6 @@ leInteiros input = map read $ words input
 
 main :: IO ()
 main = do
- 
   linhaComando <- getLine --le os numeros da linha de comando
   let numeros = leInteiros linhaComando --transforma linha lida em uma lista de números 
   putStrLn $ stringJogada numeros ++ " " ++ show (calculaPontos numeros) --printa o resultado na tela
