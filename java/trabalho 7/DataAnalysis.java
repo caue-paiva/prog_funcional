@@ -10,6 +10,7 @@ public class DataAnalysis {
     public static int somaAtivosComConfirmadosAcima(int n1, List<DadosPais> dadosList) {
         int soma = 0;
 
+        // soma as quantidades active
         for (DadosPais dados : dadosList) {
             if (dados.getConfirmed() >= n1) {
                 soma += dados.getActive();
@@ -23,6 +24,7 @@ public class DataAnalysis {
     public static int somaMortesComMenoresConfirmados(int n2, int n3, List<DadosPais> dadosList) {
         List<DadosPais> copiaDadosList = new ArrayList<>(dadosList);
 
+        // ajusta em ordem descrescente os países com mais active para depois pegar os n2 primeiros
         Collections.sort(copiaDadosList, new Comparator<DadosPais>() {
             @Override
             public int compare(DadosPais d1, DadosPais d2) {
@@ -30,8 +32,10 @@ public class DataAnalysis {
             }
         });
 
+        // copia para uma lista os n2 primeiros países
         List<DadosPais> topActive = copiaDadosList.subList(0, Math.min(n2, copiaDadosList.size()));
 
+        // ajusta em ordem crescente para pegar os n3 países com menores valores de confirmed
         Collections.sort(topActive, new Comparator<DadosPais>() {
             @Override
             public int compare(DadosPais d1, DadosPais d2) {
@@ -39,8 +43,10 @@ public class DataAnalysis {
             }
         });
 
+        // pega os n3 menores
         List<DadosPais> menoresConfirmados = topActive.subList(0, Math.min(n3, topActive.size()));
 
+        // soma as quantidades de mortes 
         int somaMortes = 0;
         for (DadosPais dados : menoresConfirmados) {
             somaMortes += dados.getDeaths();
@@ -52,14 +58,19 @@ public class DataAnalysis {
     // função que retorna os n4 países com mais confirmed em ordem alfabética        
     public static List<String> maioresConfirmadosAlfabetica(int n4, List<DadosPais> dadosList) {
         List<DadosPais> copiaDadosList = new ArrayList<>(dadosList);
+
+        // ajusta em ordem descrescente para pegar os n4 países com mais confirmed
         Collections.sort(copiaDadosList, new Comparator<DadosPais>() {
             @Override
             public int compare(DadosPais d1, DadosPais d2) {
                 return Integer.compare(d2.getConfirmed(), d1.getConfirmed()); // Ordem decrescente
             }
         });
+
+        // pega os n4 primeiros
         List<DadosPais> n4_paises = copiaDadosList.subList(0, Math.min(n4, copiaDadosList.size()));
 
+        // ajusta em ordel alfabética
         Collections.sort(n4_paises, new Comparator<DadosPais>() {
             @Override
             public int compare(DadosPais d1, DadosPais d2) {
@@ -67,6 +78,7 @@ public class DataAnalysis {
             }
         });
 
+        // coloca em uma lista de Strings
         List<String> result = new ArrayList<>();
         for (DadosPais dados : n4_paises) {
             result.add(dados.getCountry());
