@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 public class CsvReader {
     public static List<DadosPais> leCSV(String filePath) throws IOException {
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            // mapeia o csv pegando valor a valor e colocando dentro da struct criada DadosPais
             return br.lines()
                      .map(line -> line.split(","))
                      .map(values -> new DadosPais(values[0], Integer.parseInt(values[1]),

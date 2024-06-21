@@ -1,4 +1,7 @@
 public class DadosPais {
+
+    // definição da estrutura que será utilizada ao ler o csv 
+
     private final String country;
     private final int confirmed;
     private final int deaths;
@@ -13,6 +16,9 @@ public class DadosPais {
         this.active = active;
     }
 
+
+    // funções de retorno para as informações de cada conjunto de dados de um país
+    
     public String getCountry() {
         return country;
     }
