@@ -50,7 +50,7 @@ public class DataAnalysis {
     }
 
     // função que retorna os n4 países com mais confirmed em ordem alfabética        
-    public static List<String> maioresConfirmadosAlfabetica(int n, List<DadosPais> dadosList) {
+    public static List<String> maioresConfirmadosAlfabetica(int n4, List<DadosPais> dadosList) {
         List<DadosPais> copiaDadosList = new ArrayList<>(dadosList);
         Collections.sort(copiaDadosList, new Comparator<DadosPais>() {
             @Override
@@ -58,7 +58,7 @@ public class DataAnalysis {
                 return Integer.compare(d2.getConfirmed(), d1.getConfirmed()); // Ordem decrescente
             }
         });
-        List<DadosPais> n4_paises = copiaDadosList.subList(0, Math.min(n, copiaDadosList.size()));
+        List<DadosPais> n4_paises = copiaDadosList.subList(0, Math.min(n4, copiaDadosList.size()));
 
         Collections.sort(n4_paises, new Comparator<DadosPais>() {
             @Override
