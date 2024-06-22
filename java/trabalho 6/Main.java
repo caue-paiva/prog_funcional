@@ -63,7 +63,7 @@ class CountryData {
 }
 
 class DataOperations {
-    //classe com as operações sobre o stream de dados que será coletado a partir do csv lido
+    //classe com as operações sobre os de dados que serão coletado a partir do csv lido
 
     // método que soma os active de todos os países em que confirmed é maior ou igual que n1
     public static int sumActivesGreaterEqualN1(int n1, List<CountryData> countriesList) {
