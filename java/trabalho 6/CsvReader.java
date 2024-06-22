@@ -1,9 +1,5 @@
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.List;
-import java.util.stream.Collectors;
 
+/* 
 public class CsvReader {
     public static List<DadosPais> leCSV(String filePath) throws IOException {
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
@@ -17,3 +13,4 @@ public class CsvReader {
         }
     }
 }
+*/

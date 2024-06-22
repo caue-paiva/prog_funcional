@@ -3,6 +3,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 
+
+
 public class DataAnalysis {
 
     // função que soma os active de todos os países em que confirmed é maior ou igual que n1
